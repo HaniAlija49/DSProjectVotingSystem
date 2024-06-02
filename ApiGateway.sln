@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VotingService", "VotingServ
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElectionsService", "ElectionsService\ElectionsService.csproj", "{A65744EA-666D-43E5-9041-F64357C4880C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestultService", "RestultService\RestultService.csproj", "{252377C0-2A8E-44EE-B713-D05514C6FD9F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResultService", "RestultService\ResultService.csproj", "{252377C0-2A8E-44EE-B713-D05514C6FD9F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
