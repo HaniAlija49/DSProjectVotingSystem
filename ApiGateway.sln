@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiGateway", "ApiGateway\Ap
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthService", "AuthService\AuthService.csproj", "{429A9F15-9D79-4789-9CFB-269F403533EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VotingService", "VotingService\VotingService.csproj", "{4C6B7DDE-5A74-4CF6-A784-4B7F7276851D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VotingService", "VotingService\VotingService.csproj", "{4C6B7DDE-5A74-4CF6-A784-4B7F7276851D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElectionsService", "ElectionsService\ElectionsService.csproj", "{A65744EA-666D-43E5-9041-F64357C4880C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{4C6B7DDE-5A74-4CF6-A784-4B7F7276851D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C6B7DDE-5A74-4CF6-A784-4B7F7276851D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C6B7DDE-5A74-4CF6-A784-4B7F7276851D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A65744EA-666D-43E5-9041-F64357C4880C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A65744EA-666D-43E5-9041-F64357C4880C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A65744EA-666D-43E5-9041-F64357C4880C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A65744EA-666D-43E5-9041-F64357C4880C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
