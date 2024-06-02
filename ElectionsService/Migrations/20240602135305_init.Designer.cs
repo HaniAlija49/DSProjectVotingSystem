@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ElectionsService.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240602131806_MGR3")]
-    partial class MGR3
+    [Migration("20240602135305_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

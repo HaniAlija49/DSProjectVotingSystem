@@ -33,10 +33,7 @@ namespace VotingService.Controllers
             if (hasVoted)
                 return BadRequest("User has already voted.");
 
-            // Validate ElectionId and CandidateId
-            if (!await ValidateElectionId(model.ElectionId) || !await ValidateCandidateId(model.CandidateId))
-                return BadRequest("Invalid ElectionId or CandidateId.");
-
+      
             var vote = new Vote
             {
                 UserId = userId,
@@ -67,18 +64,6 @@ namespace VotingService.Controllers
             return Ok(new { HasVoted = false });
         }
 
-        private async Task<bool> ValidateElectionId(int electionId)
-        {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync($"http://electionservice/api/elections/{electionId}");
-            return response.IsSuccessStatusCode;
-        }
-
-        private async Task<bool> ValidateCandidateId(int candidateId)
-        {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync($"http://candidateservice/api/candidates/{candidateId}");
-            return response.IsSuccessStatusCode;
-        }
+     
     }
 }

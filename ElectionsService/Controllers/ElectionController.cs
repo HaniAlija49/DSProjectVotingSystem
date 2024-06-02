@@ -38,9 +38,27 @@ namespace ElectionsService.Controllers
         [Authorize]
         public async Task<IActionResult> GetElections()
         {
-            var elections = await _context.Elections.ToListAsync();
-            return Ok(elections);
+            var elections = await _context.Elections
+                .Include(e => e.Candidates)
+                .ToListAsync();
+
+            var result = elections.Select(e => new
+            {
+                e.ElectionId,
+                e.Name,
+                e.StartDate,
+                e.EndDate,
+                Candidates = e.Candidates.Select(c => new
+                {
+                    c.CandidateId,
+                    c.Name,
+                    c.Party
+                }).ToList()
+            }).ToList();
+
+            return Ok(result);
         }
+
 
         [HttpPost("{id}/candidates")]
         [Authorize]
@@ -67,7 +85,7 @@ namespace ElectionsService.Controllers
 
         [HttpGet("{id}")]
         [Authorize]
-        public async Task<IActionResult> GetElectionDetails(int id)
+        public async Task<IActionResult> GetElections(int id)
         {
             var election = await _context.Elections
                 .Include(e => e.Candidates)
@@ -78,7 +96,22 @@ namespace ElectionsService.Controllers
                 return NotFound(new { Message = "Election not found" });
             }
 
-            return Ok(election);
+            var result = new
+            {
+                election.ElectionId,
+                election.Name,
+                election.StartDate,
+                election.EndDate,
+                Candidates = election.Candidates.Select(c => new
+                {
+                    c.CandidateId,
+                    c.Name,
+                    c.Party
+                }).ToList()
+            };
+
+            return Ok(result);
         }
+
     }
 }
