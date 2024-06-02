@@ -41,5 +41,44 @@ namespace ElectionsService.Controllers
             var elections = await _context.Elections.ToListAsync();
             return Ok(elections);
         }
+
+        [HttpPost("{id}/candidates")]
+        [Authorize]
+        public async Task<IActionResult> AddCandidates(int id, [FromBody] CandidateModel model)
+        {
+            var election = await _context.Elections.FindAsync(id);
+            if (election == null)
+            {
+                return NotFound(new { Message = "Election not found" });
+            }
+
+            var candidate = new Candidate
+            {
+                ElectionId = id,
+                Name = model.Name,
+                Party = model.Party
+            };
+
+            _context.Candidates.Add(candidate);
+            await _context.SaveChangesAsync();
+
+            return Ok(new { Message = "Candidate added successfully", CandidateId = candidate.CandidateId });
+        }
+
+        [HttpGet("{id}")]
+        [Authorize]
+        public async Task<IActionResult> GetElectionDetails(int id)
+        {
+            var election = await _context.Elections
+                .Include(e => e.Candidates)
+                .FirstOrDefaultAsync(e => e.ElectionId == id);
+
+            if (election == null)
+            {
+                return NotFound(new { Message = "Election not found" });
+            }
+
+            return Ok(election);
+        }
     }
 }

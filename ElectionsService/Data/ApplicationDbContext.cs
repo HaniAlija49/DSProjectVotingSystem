@@ -12,5 +12,6 @@ namespace ElectionsService.Data
         }
 
         public DbSet<Election> Elections { get; set; }
+        public DbSet<Candidate> Candidates { get; set; }
     }
 }
