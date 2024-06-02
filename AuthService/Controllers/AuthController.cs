@@ -1,4 +1,5 @@
 ﻿using AuthService.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -45,6 +46,21 @@ namespace AuthService.Controllers
 
             var token = GenerateJwtToken(user);
             return Ok(new { Token = token });
+        }
+
+
+        [HttpGet("me")]
+        public async Task<IActionResult> Me()
+        {
+            var userName = User.Identity.Name;
+            if (string.IsNullOrEmpty(userName))
+                return Unauthorized();
+
+            var user = await _userManager.FindByNameAsync(userName);
+            if (user == null)
+                return Unauthorized();
+
+            return Ok(new { Username = user.UserName, Email = user.Email });
         }
 
         private string GenerateJwtToken(ApplicationUser user)
