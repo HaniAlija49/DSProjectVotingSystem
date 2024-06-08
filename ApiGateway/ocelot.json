@@ -2,26 +2,23 @@
   "Routes": [
     {
       "DownstreamPathTemplate": "/api/auth/{everything}",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "authservice",
-          "Port": 80
+          "Host": "localhost",
+          "Port": 32774
         }
       ],
       "UpstreamPathTemplate": "/auth/{everything}",
-      "UpstreamHttpMethod": [ "POST", "GET" ],
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "Bearer"
-      }
+      "UpstreamHttpMethod": [ "POST", "GET" ]
     },
     {
       "DownstreamPathTemplate": "/api/voting/{everything}",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "votingservice",
-          "Port": 80
+          "Host": "localhost",
+          "Port": 32774
         }
       ],
       "UpstreamPathTemplate": "/voting/{everything}",
@@ -32,10 +29,10 @@
     },
     {
       "DownstreamPathTemplate": "/api/elections/{everything}",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "electionservice",
+          "Host": "localhost",
           "Port": 80
         }
       ],
@@ -47,10 +44,10 @@
     },
     {
       "DownstreamPathTemplate": "/api/results/{everything}",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "resultsservice",
+          "Host": "localhost",
           "Port": 80
         }
       ],
@@ -60,8 +57,5 @@
         "AuthenticationProviderKey": "Bearer"
       }
     }
-  ],
-  "GlobalConfiguration": {
-    "BaseUrl": "https://localhost:5000"
-  }
+  ]
 }

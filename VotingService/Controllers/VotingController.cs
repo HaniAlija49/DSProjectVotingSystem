@@ -4,9 +4,9 @@ using System.Security.Claims;
 using VotingService.Models;
 using VotingService.Data;
 using Microsoft.EntityFrameworkCore;
-using System.Net.Http;
-using System.Net.Http.Json;
 using System.Threading.Tasks;
+using Azure.Messaging.ServiceBus;
+using Newtonsoft.Json;
 
 namespace VotingService.Controllers
 {
@@ -15,12 +15,19 @@ namespace VotingService.Controllers
     public class VotingController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
-        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IConfiguration _configuration;
+        private readonly ServiceBusClient _client;
+        private readonly ServiceBusSender _sender;
 
-        public VotingController(ApplicationDbContext context, IHttpClientFactory httpClientFactory)
+        public VotingController(ApplicationDbContext context, IConfiguration configuration)
         {
             _context = context;
-            _httpClientFactory = httpClientFactory;
+            _configuration = configuration;
+
+            var connectionString = _configuration["ServiceBus:ConnectionString"];
+            var queueName = _configuration["ServiceBus:QueueName"];
+            _client = new ServiceBusClient(connectionString);
+            _sender = _client.CreateSender(queueName);
         }
 
         [HttpPost("vote")]
@@ -33,7 +40,6 @@ namespace VotingService.Controllers
             if (hasVoted)
                 return BadRequest("User has already voted.");
 
-      
             var vote = new Vote
             {
                 UserId = userId,
@@ -44,6 +50,10 @@ namespace VotingService.Controllers
 
             _context.Votes.Add(vote);
             await _context.SaveChangesAsync();
+
+            // Send the vote to the Azure Service Bus
+            var voteMessage = new ServiceBusMessage(JsonConvert.SerializeObject(vote));
+            await _sender.SendMessageAsync(voteMessage);
 
             return Ok(new { Message = "Vote recorded successfully" });
         }
@@ -63,7 +73,5 @@ namespace VotingService.Controllers
 
             return Ok(new { HasVoted = false });
         }
-
-     
     }
 }

@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ResultService.Data;
+using VotingService.Data;
 
 #nullable disable
 
-namespace ResultService.Migrations
+namespace VotingService.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -22,35 +22,13 @@ namespace ResultService.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("ResultService.Models.Result", b =>
+            modelBuilder.Entity("VotingService.Models.Vote", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("VoteId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CandidateId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ElectionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("VoteCount")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Results");
-                });
-
-            modelBuilder.Entity("ResultService.Models.Vote", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("VoteId"));
 
                     b.Property<int>("CandidateId")
                         .HasColumnType("int");
@@ -65,10 +43,7 @@ namespace ResultService.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("VoteId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
+                    b.HasKey("VoteId");
 
                     b.ToTable("Votes");
                 });

@@ -23,13 +23,22 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 builder.Services.AddOcelot();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
 
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
 await app.UseOcelot();
+if (app.Environment.IsDevelopment())
 
 app.Run();

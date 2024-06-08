@@ -11,5 +11,6 @@ namespace ResultService.Data
         }
 
         public DbSet<Result> Results { get; set; }
+        public DbSet<Vote> Votes { get; set; }
     }
 }

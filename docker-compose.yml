@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  votingservice:
+    image: votingsservice:dev
+    container_name: votingservice
+    ports:
+      - "32776:433"
+    networks:
+      - app-network
+
+  electionservice:
+    image: electionservice:dev
+    container_name: electionservice
+    ports:
+      - "32772:433"
+    networks:
+      - app-network
+
+  resultservice:
+    image: resultservice:dev
+    container_name: resultservice
+    ports:
+      - "32770:433"
+    networks:
+      - app-network
+    depends_on:
+      - votingservice
+      - electionservice
+
+  authservice:
+    image: authservice:dev
+    container_name: authservice
+    ports:
+      - "32774:80"
+    networks:
+      - app-network
+
+  apigateway:
+    image: apigateway:dev
+    container_name: apigateway
+    ports:
+      - "32768:80"
+    networks:
+      - app-network
+    depends_on:
+      - resultservice
+      - authservice
+
+networks:
+  app-network:
+    driver: bridge
