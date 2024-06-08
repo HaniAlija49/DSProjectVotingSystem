@@ -7,16 +7,16 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["RestultService/RestultService.csproj", "RestultService/"]
-RUN dotnet restore "RestultService/RestultService.csproj"
+COPY ["RestultService/ResultService.csproj", "ResultService/"]
+RUN dotnet restore "ResultService/ResultService.csproj"
 COPY . .
 WORKDIR "/src/RestultService"
-RUN dotnet build "RestultService.csproj" -c Release -o /app/build
+RUN dotnet build "ResultService.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "RestultService.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "ResultService.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "RestultService.dll"]
+ENTRYPOINT ["dotnet", "ResultService.dll"]
